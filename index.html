@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sublime Cacau | Chocolates Finos & Artesanais</title>
+    <!-- Tailwind CSS para design moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cacau: {
+                            900: '#2C1810',
+                            800: '#3D2317',
+                            700: '#4A2E21',
+                            600: '#5C3A2B',
+                            gold: '#D4AF37',
+                            cream: '#FDFBF7',
+                            sand: '#F4EBE1'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cacau-cream text-cacau-900 font-sans antialiased">
+
+    <!-- CABEÇALHO / PERFIL -->
+    <header class="bg-cacau-900 text-white pt-8 pb-6 px-4 text-center shadow-lg relative">
+        <div class="max-w-md mx-auto">
+            <div class="w-24 h-24 mx-auto rounded-full border-2 border-cacau-gold p-1 bg-cacau-800 shadow-md mb-3 flex items-center justify-center">
+                <i class="fa-solid fa-cookie-bite text-3xl text-cacau-gold"></i>
+            </div>
+            <h1 class="text-2xl font-bold tracking-wide">Sublime Cacau</h1>
+            <p class="text-xs text-cacau-sand/80 mt-1 uppercase tracking-widest font-semibold">Chocolates Finos & Doces Artesanais</p>
+            <p class="text-sm text-cacau-sand mt-2 px-4 leading-relaxed">Experiências sensoriais em cada mordida. Feito à mão para momentos inesquecíveis.</p>
+            
+            <!-- SELETOR DE MODO -->
+            <div class="flex justify-center gap-2 mt-6">
+                <button onclick="switchTab('catalogo')" id="btn-catalogo" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all bg-cacau-gold text-cacau-900 shadow">
+                    <i class="fa-solid fa-store mr-1"></i> Catálogo & Vendas
+                </button>
+                <button onclick="switchTab('eventos')" id="btn-eventos" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all bg-cacau-800 text-cacau-sand hover:bg-cacau-700">
+                    <i class="fa-solid fa-gift mr-1"></i> Eventos & B2B
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="max-w-md mx-auto px-4 py-6 mb-24">
+
+        <!-- ABA 1: CATÁLOGO DE PRODUTOS -->
+        <section id="tab-catalogo" class="space-y-4">
+            
+            <!-- Filtros de Categoria -->
+            <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterProducts('todos')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-full bg-cacau-900 text-white whitespace-nowrap active-filter">Todos</button>
+                <button onclick="filterProducts('trufas')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-full bg-cacau-sand text-cacau-900 whitespace-nowrap">Trufas & Barras</button>
+                <button onclick="filterProducts('caixas')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-full bg-cacau-sand text-cacau-900 whitespace-nowrap">Caixas Presente</button>
+                <button onclick="filterProducts('sazonais')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-full bg-cacau-sand text-cacau-900 whitespace-nowrap">Especiais</button>
+            </div>
+
+            <!-- Lista de Produtos -->
+            <div id="product-list" class="space-y-3">
+                <!-- Inserido via JavaScript -->
+            </div>
+        </section>
+
+        <!-- ABA 2: EVENTOS, CORPORATIVO & CALCULADORA -->
+        <section id="tab-eventos" class="hidden space-y-6">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-cacau-sand">
+                <h2 class="text-lg font-bold text-cacau-900 mb-2"><i class="fa-solid fa-champagne-glasses text-cacau-gold mr-2"></i>Eventos & Lembranças</h2>
+                <p class="text-xs text-gray-600 mb-4">Casamentos, aniversários, batizados e brindes corporativos personalizados com a identidade da sua marca ou evento.</p>
+                <a href="https://wa.me/5588994813384?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20eventos%20ou%20brindes%20corporativos%20da%20Sublime%20Cacau." target="_blank" class="block w-full text-center bg-cacau-900 text-cacau-gold py-3 rounded-xl font-bold text-sm shadow hover:bg-cacau-800 transition">
+                    <i class="fa-brands fa-whatsapp mr-2"></i> Solicitar Orçamento Personalizado
+                </a>
+            </div>
+
+            <!-- Calculadora de Doces -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-cacau-sand">
+                <h2 class="text-sm font-bold text-cacau-900 mb-3 uppercase tracking-wider"><i class="fa-solid fa-calculator text-cacau-gold mr-2"></i>Calculadora para Festas</h2>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Número de Convidados:</label>
+                        <input type="number" id="calc-guests" value="50" min="10" max="1000" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-cacau-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Tipo de Evento:</label>
+                        <select id="calc-type" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-cacau-gold">
+                            <option value="moderado">Reunião / Coquetel (aprox. 4 doces/convidado)</option>
+                            <option value="festa">Casamento / Aniversário (aprox. 6 doces/convidado)</option>
+                            <option value="intenso">Festa Grande / Festa Infantil (aprox. 8 doces/convidado)</option>
+                        </select>
+                    </div>
+                    <button onclick="calculateSweets()" class="w-full bg-cacau-gold text-cacau-900 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow">Calcular Quantidade</button>
+                    <div id="calc-result" class="hidden mt-3 p-3 bg-cacau-sand rounded-xl text-center text-xs text-cacau-900 font-medium"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BARRA FLUTUANTE DE CARRINHO / WHATSAPP DIRETO -->
+    <div id="cart-bar" class="fixed bottom-0 left-0 right-0 bg-cacau-900 text-white p-4 shadow-2xl border-t border-cacau-800 hidden transform transition-all duration-300">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <div>
+                <span class="text-xs text-cacau-sand block">Itens selecionados: <strong id="cart-count" class="text-white">0</strong></span>
+                <span class="text-base font-bold text-cacau-gold" id="cart-total">R$ 0,00</span>
+            </div>
+            <button onclick="openCheckoutModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-md flex items-center gap-2">
+                <i class="fa-brands fa-whatsapp text-base"></i> Finalizar Pedido
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CHECKOUT -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-base font-bold text-cacau-900">Finalizar Pedido no WhatsApp</h3>
+                <button onclick="closeCheckoutModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <div class="space-y-3 mb-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Seu Nome:</label>
+                    <input type="text" id="client-name" placeholder="Digite seu nome completo" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-cacau-gold">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Forma de Retirada / Entrega:</label>
+                    <select id="delivery-type" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-cacau-gold">
+                        <option value="Retirada no Local">Retirada no Local</option>
+                        <option value="Entrega em Domicílio (Consultar Taxa)">Entrega em Domicílio</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Observações (opcional):</label>
+                    <textarea id="client-obs" placeholder="Ex: Presente para embrulhar, restrição alimentar..." class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-cacau-gold h-20 resize-none"></textarea>
+                </div>
+            </div>
+
+            <div id="order-summary-box" class="bg-cacau-sand p-3 rounded-xl mb-4 text-xs space-y-1">
+                <!-- Resumo inserido via JS -->
+            </div>
+
+            <button onclick="sendToWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i> Enviar Pedido para o WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- SCRIPTS DE FUNCIONALIDADE -->
+    <script>
+        // Número configurado: +55 (88) 99481-3384
+        const WHATSAPP_NUMBER = "5588994813384";
+
+        const products = [
+            { id: 1, name: "Caixa Trufas Finas Sortidas (9un)", category: "caixas", price: 45.00, desc: "Seleção de trufas artesanais com recheios cremosos de cacau de origem.", icon: "fa-gift" },
+            { id: 2, name: "Barra Recheada Avelã & Cacau 54%", category: "trufas", price: 32.00, desc: "Chocolate ao leite 54% cacau com generosa camada de creme de avelã.", icon: "fa-cookie" },
+            { id: 3, name: "Bombons Rústicos de Caramelo Salgado", category: "trufas", price: 28.00, desc: "Casquinha de chocolate meio amargo com recheio fluído de caramelo e flor de sal.", icon: "fa-candy-cane" },
+            { id: 4, name: "Kit Degustação Bean-to-Bar", category: "sazonais", price: 89.00, desc: "4 barras de origens diferentes para explorar notas sensoriais únicas.", icon: "fa-box-open" },
+            { id: 5, name: "Coração Diamante Recheado", category: "sazonais", price: 55.00, desc: "Perfeito para presentear em datas especiais com bombons finos dentro.", icon: "fa-heart" }
+        ];
+
+        let cart = {};
+
+        function renderProducts(filter = 'todos') {
+            const container = document.getElementById('product-list');
+            container.innerHTML = '';
+
+            const filtered = filter === 'todos' ? products : products.filter(p => p.category === filter);
+
+            filtered.forEach(p => {
+                const qty = cart[p.id] ? cart[p.id].qty : 0;
+                const html = `
+                    <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-cacau-sand flex items-center justify-between gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-cacau-sand flex items-center justify-center text-cacau-900 text-lg shrink-0">
+                            <i class="fa-solid ${p.icon}"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-xs font-bold text-cacau-900 truncate">${p.name}</h3>
+                            <p class="text-[11px] text-gray-500 line-clamp-1 mt-0.5">${p.desc}</p>
+                            <span class="text-xs font-extrabold text-cacau-700 mt-1 block">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            ${qty > 0 ? `
+                                <button onclick="updateCart(${p.id}, -1)" class="w-7 h-7 bg-cacau-sand text-cacau-900 rounded-full font-bold flex items-center justify-center text-xs">-</button>
+                                <span class="text-xs font-bold w-4 text-center">${qty}</span>
+                            ` : ''}
+                            <button onclick="updateCart(${p.id}, 1)" class="w-7 h-7 bg-cacau-900 text-white rounded-full font-bold flex items-center justify-center text-xs shadow">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        function filterProducts(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-cacau-900', 'text-white');
+                btn.classList.add('bg-cacau-sand', 'text-cacau-900');
+            });
+            event.target.classList.remove('bg-cacau-sand', 'text-cacau-900');
+            event.target.classList.add('bg-cacau-900', 'text-white');
+            renderProducts(category);
+        }
+
+        function updateCart(productId, delta) {
+            const product = products.find(p => p.id === productId);
+            if (!cart[productId]) {
+                cart[productId] = { ...product, qty: 0 };
+            }
+            cart[productId].qty += delta;
+            if (cart[productId].qty <= 0) {
+                delete cart[productId];
+            }
+            updateCartUI();
+            renderProducts(document.querySelector('.filter-btn.bg-cacau-900').textContent.toLowerCase().includes('todos') ? 'todos' : 'trufas');
+        }
+
+        function updateCartUI() {
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            Object.values(cart).forEach(item => {
+                totalItems += item.qty;
+                totalPrice += item.price * item.qty;
+            });
+
+            document.getElementById('cart-count').innerText = totalItems;
+            document.getElementById('cart-total').innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+
+            const cartBar = document.getElementById('cart-bar');
+            if (totalItems > 0) {
+                cartBar.classList.remove('hidden');
+            } else {
+                cartBar.classList.add('hidden');
+            }
+        }
+
+        function switchTab(tab) {
+            const btnCatalogo = document.getElementById('btn-catalogo');
+            const btnEventos = document.getElementById('btn-eventos');
+            const tabCatalogo = document.getElementById('tab-catalogo');
+            const tabEventos = document.getElementById('tab-eventos');
+
+            if (tab === 'catalogo') {
+                btnCatalogo.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all bg-cacau-gold text-cacau-900 shadow";
+                btnEventos.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all bg-cacau-800 text-cacau-sand hover:bg-cacau-700";
+                tabCatalogo.classList.remove('hidden');
+                tabEventos.classList.add('hidden');
+            } else {
+                btnEventos.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all bg-cacau-gold text-cacau-900 shadow";
+                btnCatalogo.className = "px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all bg-cacau-800 text-cacau-sand hover:bg-cacau-700";
+                tabEventos.classList.remove('hidden');
+                tabCatalogo.classList.add('hidden');
+            }
+        }
+
+        function calculateSweets() {
+            const guests = parseInt(document.getElementById('calc-guests').value) || 50;
+            const type = document.getElementById('calc-type').value;
+            
+            let multiplier = 4;
+            if (type === 'festa') multiplier = 6;
+            if (type === 'intenso') multiplier = 8;
+
+            const totalSweets = guests * multiplier;
+            const resultBox = document.getElementById('calc-result');
+            resultBox.classList.remove('hidden');
+            resultBox.innerHTML = `Para <strong>${guests} convidados</strong>, recomendamos aproximadamente <strong>${totalSweets} doces finos</strong> para suprir o evento com elegância.`;
+        }
+
+        function openCheckoutModal() {
+            document.getElementById('checkout-modal').classList.remove('hidden');
+            let summaryHTML = '<p class="font-bold text-cacau-900 mb-1">Resumo dos itens:</p>';
+            let totalPrice = 0;
+
+            Object.values(cart).forEach(item => {
+                const sub = item.price * item.qty;
+                totalPrice += sub;
+                summaryHTML += `<div>• ${item.qty}x ${item.name} - R$ ${sub.toFixed(2).replace('.', ',')}</div>`;
+            });
+            summaryHTML += `<p class="font-bold text-cacau-900 mt-2 pt-1 border-t border-cacau-gold/30">Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}</p>`;
+            document.getElementById('order-summary-box').innerHTML = summaryHTML;
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('client-name').value.trim();
+            const delivery = document.getElementById('delivery-type').value;
+            const obs = document.getElementById('client-obs').value.trim();
+
+            if (!name) {
+                alert('Por favor, informe seu nome para continuar.');
+                document.getElementById('client-name').focus();
+                return;
+            }
+
+            let message = `🍫 *NOVO PEDIDO - SUBLIME CACAU*\n\n`;
+            message += `👤 *Cliente:* ${name}\n`;
+            message += `📍 *Forma:* ${delivery}\n`;
+            if (obs) message += `📝 *Obs:* ${obs}\n`;
+            message += `\n*ITENS DO PEDIDO:*\n`;
+
+            let totalPrice = 0;
+            Object.values(cart).forEach(item => {
+                const sub = item.price * item.qty;
+                totalPrice += sub;
+                message += `• ${item.qty}x ${item.name} (R$ ${sub.toFixed(2).replace('.', ',')})\n`;
+            });
+
+            message += `\n*TOTAL:* R$ ${totalPrice.toFixed(2).replace('.', ',')}\n\n_Pedido gerado via catálogo interativo._`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            
+            window.open(whatsappURL, '_blank');
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
